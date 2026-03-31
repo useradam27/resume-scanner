@@ -1,3 +1,10 @@
 spring:
-  application:
-    name: resumescanner
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+aws:
+  region: us-east-1
+  s3:
+    bucket-name: resume-scanner-uploads-adam27
