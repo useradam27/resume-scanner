@@ -6,7 +6,7 @@ import lombok.Data;
 //Defines structure of our json response
 @Data
 @Builder
-public class ResumeUplaodResponse {
+public class ResumeUploadResponse {
     private String message;
     private String s3Key;
     private String fileName;
