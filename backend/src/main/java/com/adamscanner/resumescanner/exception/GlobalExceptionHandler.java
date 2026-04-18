@@ -35,4 +35,11 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(500).body(error);
     }
+
+    @ExceptionHandler(BedrockApiException.class)
+    public ResponseEntity<Map<String, String>> handleBedrockError(BedrockApiException e) {
+        Map<String, String> error = Map.of("error", "AI Analysis Errorß", "message", e.getMessage());
+
+        return ResponseEntity.status(502).body(error);
+    }
 }
