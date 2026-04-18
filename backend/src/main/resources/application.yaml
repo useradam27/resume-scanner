@@ -8,3 +8,5 @@ aws:
   region: us-east-1
   s3:
     bucket-name: resume-scanner-uploads-adam27
+  bedrock:
+    model-id: us.anthropic.claude-sonnet-4-5-20250920-v1:0

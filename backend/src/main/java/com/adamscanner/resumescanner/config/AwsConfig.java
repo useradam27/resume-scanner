@@ -20,6 +20,14 @@ public class AwsConfig {
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
 
+    @Value("${aws.bedrock.model-id}")
+    private String bedrockModelId;
+
+    @Bean
+    public String bedrockModelId() {
+        return bedrockModelId;
+    }
+
     @Bean
     public S3Client s3Client() {
         return S3Client.builder()
