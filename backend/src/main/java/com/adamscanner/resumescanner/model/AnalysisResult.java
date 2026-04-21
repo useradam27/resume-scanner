@@ -21,4 +21,5 @@ public class AnalysisResult {
     private List<String> suggestions;
     private String experienceMatch;
     private String skillsMatch;
+    private String justification;
 }

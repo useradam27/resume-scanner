@@ -48,7 +48,16 @@ public class BedrockService {
                 "suggestions": ["<actionable suggestion 1>"],
                 "experienceMatch": "<strong|moderate|weak>",
                 "skillsMatch": "<strong|moderate|weak>"
+                "justification": "<detailed explanation of the scores and matches>"
             }
+
+            For overallScore, score 80+ means the candidate is a strong fit with minor gaps. Score 50-79 means moderate fit with notable gaps. Score below 50 means significant misalignment.
+
+            For suggestions, Each suggestion should be specific and actionable. Instead of 'Add more technical skills', say 'Add experience with Kubernetes and Docker to your DevOps section to match the job's container orchestration requirement.'
+
+            Return exactly 3-5 strengths, 3-7 missing keywords, and 3-5 suggestions.
+
+            For justification, provide a detailed analysis explaining why the resume received the overall score it did, and explain the reasoning behind the experienceMatch and skillsMatch ratings. Highlight specific areas of alignment and misalignment between the resume and job posting.
             """;
 
     public BedrockService(BedrockRuntimeClient bedrockClient, String modelId, ObjectMapper objectMapper) {
