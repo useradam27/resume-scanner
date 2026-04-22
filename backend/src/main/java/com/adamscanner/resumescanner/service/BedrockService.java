@@ -3,6 +3,7 @@ package com.adamscanner.resumescanner.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.adamscanner.resumescanner.exception.BedrockApiException;
@@ -60,9 +61,9 @@ public class BedrockService {
             For justification, provide a detailed analysis explaining why the resume received the overall score it did, and explain the reasoning behind the experienceMatch and skillsMatch ratings. Highlight specific areas of alignment and misalignment between the resume and job posting.
             """;
 
-    public BedrockService(BedrockRuntimeClient bedrockClient, String modelId, ObjectMapper objectMapper) {
+    public BedrockService(BedrockRuntimeClient bedrockClient, @Qualifier("bedrockModelId") String bedrockModelId, ObjectMapper objectMapper) {
         this.bedrockClient = bedrockClient;
-        this.modelId = modelId;
+        this.modelId = bedrockModelId;
         this.objectMapper = objectMapper;
         
     }
@@ -85,7 +86,7 @@ public class BedrockService {
             );
 
             Map<String, Object> body = Map.of(
-                "anthropic_version", "bedrock-2023-05-32",
+                "anthropic_version", "bedrock-2023-05-31",
                 "max_tokens", 2048,
                 "messages", List.of(message)
             );
@@ -98,9 +99,12 @@ public class BedrockService {
 
     private String invokeBedrock(String requestBody) {
         try {
+            //System.out.println("=== Sending to Bedrock, model: " + modelId + " ===");
+
             InvokeModelRequest request = InvokeModelRequest.builder()
                 .modelId(modelId)
                 .contentType("application/json")
+                .accept("application/json")
                 .body(SdkBytes.fromUtf8String(requestBody))
                 .build();
 
@@ -120,6 +124,7 @@ public class BedrockService {
         } catch (BedrockApiException e) {
             throw e;
         } catch (Exception e) {
+
             throw new RuntimeException("Failed to invoke Bedrock: " + e.getMessage(), e);
         }
     }

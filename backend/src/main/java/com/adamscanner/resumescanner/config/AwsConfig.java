@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -18,14 +20,19 @@ public class AwsConfig {
     private String region;
 
     @Value("${aws.s3.bucket-name}")
-    private String bucketName;
+    private String bucketNameValue;
 
     @Value("${aws.bedrock.model-id}")
-    private String bedrockModelId;
+    private String bedrockModelIdValue;
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 
     @Bean
     public String bedrockModelId() {
-        return bedrockModelId;
+        return bedrockModelIdValue;
     }
 
     @Bean
@@ -51,7 +58,7 @@ public class AwsConfig {
 
     @Bean
     public String s3BucketName() {
-        return bucketName;
+        return bucketNameValue;
     }
 
 }

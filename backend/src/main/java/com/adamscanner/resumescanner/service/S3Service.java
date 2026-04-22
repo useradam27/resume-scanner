@@ -2,6 +2,7 @@ package com.adamscanner.resumescanner.service;
 
 import java.io.InputStream;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -16,7 +17,7 @@ public class S3Service {
     private final S3Client s3Client;
     private final String bucketName;
 
-    public S3Service(S3Client s3Client, String bucketName) {
+    public S3Service(S3Client s3Client, @Qualifier("s3BucketName") String bucketName) {
         this.s3Client = s3Client;
         this.bucketName = bucketName;
     }

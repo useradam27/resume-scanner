@@ -35,7 +35,9 @@ public class AnalysisService {
         InputStream downloaded = s3Service.downloadFile(s3Key);
         String resumeText = textExtractionService.extractText(downloaded, contentType);
 
+
         // 3. Send to Bedrock for analysis
-        return bedrockService.analyzeResume(resumeText, jobPostingText);
+        AnalysisResult result = bedrockService.analyzeResume(resumeText, jobPostingText);
+        return result;
     }
 }
