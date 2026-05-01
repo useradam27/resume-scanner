@@ -1,4 +1,4 @@
-export default function StrengthsTab({strengths}) {
+export default function StrengthsTag({strengths}) {
     if (!strengths || strengths.length === 0) return null;
 
     return (
