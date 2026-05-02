@@ -26,7 +26,7 @@ export default function ScoreGauge({score}) {
                     className="transition-all duration-1000 ease-out"
                     />
             </svg>
-            <div className="-mt-24 text-center">
+            <div className="-mt-24 text-center relative z-10">
                 <p className="text-4xl font-bold" style={{color: getColor()}}>{score}%</p>
                 <p className="text-gray-500">Match Score</p>
             </div>
