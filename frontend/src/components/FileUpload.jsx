@@ -55,7 +55,7 @@ export default function FileUpload({file, onFileSelect, onFileClear}) {
                         onFileClear();
                         if(inputRef.current) inputRef.current.value = '';
                     }}
-                    cclassName="text-red-500 hover:text-red-700 font-medium text.sm"
+                    className="text-red-500 hover:text-red-700 font-medium text-sm"
                     >
                     Remove
                     </button>

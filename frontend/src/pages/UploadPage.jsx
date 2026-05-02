@@ -60,7 +60,7 @@ export default function UploadPage() {
                         <label className="block font-medium text-gray-700 mb-2">Resume</label>
                         <FileUpload 
                             file={file}
-                            onFileChange={setFile}
+                            onFileSelect={setFile}
                             onFileClear={() => setFile(null)} 
                         />
                     </div>
