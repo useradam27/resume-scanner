@@ -25,6 +25,9 @@ public class AwsConfig {
     @Value("${aws.bedrock.model-id}")
     private String bedrockModelIdValue;
 
+    @Value("${aws.dynamodb.table-name}")
+    private String dynamoTableName;
+
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
@@ -61,4 +64,8 @@ public class AwsConfig {
         return bucketNameValue;
     }
 
+    @Bean
+    public String dynamoTableName() {
+        return dynamoTableName;
+    }
 }
