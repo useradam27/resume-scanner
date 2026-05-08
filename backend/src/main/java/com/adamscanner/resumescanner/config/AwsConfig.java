@@ -56,6 +56,9 @@ public class AwsConfig {
     public DynamoDbClient dynamoDbClient() {
         return DynamoDbClient.builder()
                 .region(Region.of(region))
+                .overrideConfiguration(config -> config
+                        .apiCallTimeout(java.time.Duration.ofSeconds(10))
+                        .apiCallAttemptTimeout(java.time.Duration.ofSeconds(5)))
                 .build();
     }
 

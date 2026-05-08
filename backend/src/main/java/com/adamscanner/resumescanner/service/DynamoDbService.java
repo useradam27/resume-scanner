@@ -129,11 +129,14 @@ public class DynamoDbService {
     public Optional<AnalysisResult> findCachedResult(String userId, String resumeS3Key, String jobPostingText) {
         
         String jobPostingHash = hashText(jobPostingText);
+        System.out.println("=== Cache check: userId=" + userId
+            + ", s3Key=" + resumeS3Key
+            + ", hash=" + jobPostingHash + " ===");
 
         QueryRequest request = QueryRequest.builder()
         .tableName(tableName)
         .keyConditionExpression("userId = :uid")
-        .filterExpression("resumeS3Key = :s3key AND jobPostingHash = :jobHash")
+        .filterExpression("resumeS3Key = :s3key AND jobPostingHash = :hash")
         .expressionAttributeValues(Map.of(
             ":uid", AttributeValue.builder().s(userId).build(),
             ":s3key", AttributeValue.builder().s(resumeS3Key).build(),
@@ -143,6 +146,9 @@ public class DynamoDbService {
         .build();
 
         QueryResponse response = dynamoDbClient.query(request);
+
+        System.out.println("=== Cache query returned "
+                + response.items().size() + " items ===");
 
         if(response.items().isEmpty()) {
             return Optional.empty();
