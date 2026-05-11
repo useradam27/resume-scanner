@@ -3,6 +3,11 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_kj68SSKgl
 
 aws:
   region: us-east-1
@@ -12,3 +17,6 @@ aws:
     model-id: us.anthropic.claude-sonnet-4-5-20250929-v1:0
   dynamodb:
     table-name: resume-analyses
+  cognito:
+    user-pool-id: us-east-1_kj68SSKgl
+    client-id: 2o7m2m3ilrurq16b7n7uh44ghu
