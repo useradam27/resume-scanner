@@ -48,7 +48,9 @@ public class BedrockService {
                 "missingKeywords": ["<keyword 1>", "<keyword 2>"],
                 "suggestions": ["<actionable suggestion 1>"],
                 "experienceMatch": "<strong|moderate|weak>",
-                "skillsMatch": "<strong|moderate|weak>"
+                "skillsMatch": "<strong|moderate|weak>",
+                "jobTitle": "<exact job title from the posting>",
+                "companyName": "<company name or 'Unknown'>",
                 "justification": "<detailed explanation of the scores and matches>"
             }
 

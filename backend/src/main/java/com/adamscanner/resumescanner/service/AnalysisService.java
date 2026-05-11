@@ -64,7 +64,7 @@ public class AnalysisService {
 
         System.out.println("=== STEP 5: Save to DynamoDB ===");
         // 5. Store result in DynamoDB
-        dynamoDbService.saveAnalysis(userId, s3Key, jobPostingText, result);
+        dynamoDbService.saveAnalysis(userId, s3Key, file.getOriginalFilename(), jobPostingText, result);
         System.out.println("=== STEP 5 COMPLETE ===");
 
         return result;

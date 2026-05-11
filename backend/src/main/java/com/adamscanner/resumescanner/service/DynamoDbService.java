@@ -40,7 +40,7 @@ public class DynamoDbService {
     }
 
     //stores analysis result in DynamoDB and returns the generated analysisId
-    public String saveAnalysis(String userId, String resumeS3Key, String jobPostingText, AnalysisResult result) {
+    public String saveAnalysis(String userId, String resumeS3Key, String resumeFileName, String jobPostingText, AnalysisResult result) {
         String analysisId = UUID.randomUUID().toString();
         String timestamp = Instant.now().toString();
         String jobPostingHash = hashText(jobPostingText);
@@ -61,9 +61,15 @@ public class DynamoDbService {
         item.put("overallScore", AttributeValue.builder().n(String.valueOf(result.getOverallScore())).build());
         item.put("resultJson", AttributeValue.builder().s(resultJson).build());
 
-        // Extract short title from first line
-        String jobTitle = jobPostingText.lines().findFirst().orElse("Untitled").substring(0, Math.min(100, jobPostingText.lines().findFirst().orElse("Untitled").length())); //geez
-        item.put("jobTitle", AttributeValue.builder().s(jobTitle).build());
+        item.put("jobTitle", AttributeValue.builder()
+                .s(result.getJobTitle() != null ? result.getJobTitle() : "Untitled")
+                .build());
+        item.put("companyName", AttributeValue.builder()
+                .s(result.getCompanyName() != null ? result.getCompanyName() : "Unknown")
+                .build());
+        item.put("resumeFileName", AttributeValue.builder()
+                .s(resumeFileName != null ? resumeFileName : "resume.pdf")
+                .build());
 
         PutItemRequest request = PutItemRequest.builder()
                 .tableName(tableName)
@@ -120,6 +126,8 @@ public class DynamoDbService {
             summary.put("analysisId", item.get("analysisId").s());
             summary.put("timestamp", item.get("timestamp").s());
             summary.put("jobTitle", item.containsKey("jobTitle") ? item.get("jobTitle").s() : "Untitled");
+            summary.put("companyName", item.containsKey("companyName") ? item.get("companyName").s() : "Unknown");
+            summary.put("resumeFileName", item.containsKey("resumeFileName") ? item.get("resumeFileName").s() : "resume.pdf");
             summary.put("overallScore", item.containsKey("overallScore") ? item.get("overallScore").n() : "0");
             return summary;
         }).collect(Collectors.toList());

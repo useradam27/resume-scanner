@@ -19,16 +19,21 @@ export default function AnalysisCard({ analysis, onClick }) {
         });
     }
 
+    const company = analysis.companyName && analysis.companyName !== 'Unknown'
+        ? ` — ${analysis.companyName}`
+        : '';
+
     return (
         <button
             onClick={onClick}
             className="w-full bg-white rounded-xl shadow-sm border p-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
         >
             <div>
-                <p className="font-medium text-gray-800">{analysis.jobTitle}</p>
-                <p className="text-sm text-gray-400 mt-1">{formatDate(analysis.timestamp)}</p>
+                <p className="font-medium text-gray-800">{analysis.jobTitle}{company}</p>
+                <p className="text-sm text-gray-500 mt-1">{analysis.resumeFileName}</p>
+                <p className="text-sm text-gray-400 mt-0.5">{formatDate(analysis.timestamp)}</p>
             </div>
-            <div className={`text-lg font-bold ${getScoreColor()}`}>
+            <div className={`text-2xl font-bold ${getScoreColor()}`}>
                 {score}
             </div>
         </button>
