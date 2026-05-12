@@ -26,11 +26,10 @@ public class AnalysisService {
         this.dynamoDbService = dynamoDbService;
     }
 
-    public AnalysisResult analyzeResume(MultipartFile file, String jobPostingText) throws IOException {
+    public AnalysisResult analyzeResume(String userId, MultipartFile file, String jobPostingText) throws IOException {
 
         System.out.println("=== STEP 1: Upload to S3 ===");
         // 1. Upload resume to S3
-        String userId = "dev-user";
         String contentType = file.getContentType();
         String s3Key = String.format("resumes/%s/%s-%s", userId, UUID.randomUUID(), file.getOriginalFilename());
         s3Service.uploadFile(s3Key, file.getInputStream(), contentType, file.getSize());

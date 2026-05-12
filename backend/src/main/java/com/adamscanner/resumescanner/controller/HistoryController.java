@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,16 +23,20 @@ public class HistoryController {
         this.dynamoDbService = dynamoDbService;
     }
 
+    private String getUserId() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     @GetMapping("/history")
     public ResponseEntity<List<Map<String, String>>> getHistory() {
-        String userId = "dev-user"; 
+        String userId = getUserId();
         List<Map<String, String>> history = dynamoDbService.getHistory(userId);
         return ResponseEntity.ok(history);
     }
 
     @GetMapping("/analysis/{analysisId}")
     public ResponseEntity<AnalysisResult> getAnalysis(@PathVariable String analysisId) {
-        String userId = "dev-user"; 
+        String userId = getUserId();
         AnalysisResult result = dynamoDbService.getAnalysis(userId, analysisId);
         return ResponseEntity.ok(result);
     }

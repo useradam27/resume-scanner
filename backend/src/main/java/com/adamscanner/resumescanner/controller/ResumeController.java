@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +19,6 @@ import com.adamscanner.resumescanner.model.ResumeUploadResponse;
 import com.adamscanner.resumescanner.service.AnalysisService;
 import com.adamscanner.resumescanner.service.S3Service;
 import com.adamscanner.resumescanner.service.TextExtractionService;
-
-
 
 
 @RestController
@@ -41,6 +40,10 @@ public class ResumeController {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
 
+    private String getUserId() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<ResumeUploadResponse> uploadResume(@RequestParam("file") MultipartFile file) throws IOException {
 
@@ -54,7 +57,7 @@ public class ResumeController {
             throw new FileValidationException("Invalid file type. Only PDF and DOCX are accepted.");
         }
 
-        String userID = "dev-user"; // In a real app, get this from auth context
+        String userID = getUserId();
         String key = String.format("resumes/%s/%s-%s",
             userID,
             UUID.randomUUID(),
@@ -100,7 +103,8 @@ public class ResumeController {
         }
 
         //run analysis
-        AnalysisResult result = analysisService.analyzeResume(file, jobPostingText);
+        String userId = getUserId();
+        AnalysisResult result = analysisService.analyzeResume(userId,file, jobPostingText);
 
         return ResponseEntity.ok(result);
         
