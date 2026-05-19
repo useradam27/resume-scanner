@@ -9,6 +9,7 @@ export default function ProtectedRoute({ children }) {
         return <LoadingSpinner message="Checking authentication..." />;
     }
 
+    // If not authenticated, redirect to cognito login
     if (!isAuthenticated) {
         window.location.href = getLoginUrl();
         return null;
