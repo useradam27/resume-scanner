@@ -1,4 +1,4 @@
-# AI Resume Scanner
+# Resume Match Scanner
  
 A full-stack AI-powered resume analysis tool that compares resumes against job postings using AWS Bedrock (Claude). Users upload a resume, paste a job description, and receive an AI-generated match score along with actionable suggestions for improvement.
  
@@ -18,10 +18,10 @@ The backend currently supports resume file uploads (PDF and DOCX), stores them i
  
 ## Roadmap
  
-- AWS Bedrock integration for AI-powered resume analysis
-- Frontend UI for upload, analysis, and results display
-- DynamoDB integration for analysis history and caching
-- AWS Cognito authentication and multi-user support
+- ~~AWS Bedrock integration for AI-powered resume analysis~~
+- ~~Frontend UI for upload, analysis, and results display~~
+- ~~DynamoDB integration for analysis history and caching~~
+- ~~AWS Cognito authentication and multi-user support~~
 - Production deployment with CI/CD
  
 ## Author
