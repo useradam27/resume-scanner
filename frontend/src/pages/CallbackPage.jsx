@@ -16,6 +16,8 @@ export default function CallbackPage() {
     async function handleCallback() {
         const params = new URLSearchParams(window.location.search);
         const code = params.get('code');
+
+        console.log('=== Callback: code found:', !!code);
         
         if (!code) {
             setError('Authorization code not found in URL.');
@@ -24,10 +26,18 @@ export default function CallbackPage() {
 
         try {
             const tokens = await exchangeCodeForTokens(code);
+            console.log('=== Callback: tokens received:', !!tokens.idToken);
+
+
             saveTokens(tokens);
+            console.log('=== Callback: tokens saved');
+
             login(tokens);
+            console.log('=== Callback: login called');
+
             navigate('/');
         } catch (err) {
+            console.log('=== Callback error:', err.message);
             setError("Login failed. Please try again.");
         }
     }

@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
         setLoading(false);
     }
 
-    function login() {
+    function login(tokens) {
         const payload = parseJwt(tokens.idToken);
         setUser({
             email: payload.email,

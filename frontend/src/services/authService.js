@@ -1,6 +1,6 @@
 const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN;
 const CLIENT_ID = import.meta.env.VITE_COGNITO_CLIENT_ID;
-const REDIRECT_URI = import.meta.env.VITE_COGNITO_REDIRECT_URI;
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 
 export function getLoginUrl() {
     return (
