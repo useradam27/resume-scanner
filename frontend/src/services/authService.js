@@ -16,7 +16,7 @@ export function getLogoutUrl() {
     return (
         `${COGNITO_DOMAIN}/logout?` +
         `client_id=${CLIENT_ID}&` +
-        `logout_uri=${encodeURIComponent('http://localhost:5173')}`
+        `logout_uri=${encodeURIComponent(window.location.origin)}`
     );
 }
 

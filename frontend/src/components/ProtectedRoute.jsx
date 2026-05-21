@@ -1,20 +1,17 @@
 import useAuth from "../hooks/useAuth";
-import { getLoginUrl } from "../services/authService";
+import { Navigate } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
 
 export default function ProtectedRoute({ children }) {
     const { isAuthenticated, loading } = useAuth();
 
     if (loading) {
-        return <LoadingSpinner message="Checking authentication..." />;
+        return <LoadingSpinner message="Checking auth..." />;
     }
 
-    // If not authenticated, redirect to cognito login
     if (!isAuthenticated) {
-        window.location.href = getLoginUrl();
-        return null;
+        return <Navigate to="/" replace />;
     }
 
     return children;
-
 }

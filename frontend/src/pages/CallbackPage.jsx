@@ -9,9 +9,6 @@ export default function CallbackPage() {
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    useEffect(() => {
-        handleCallback();
-    }, []);
 
     async function handleCallback() {
         const params = new URLSearchParams(window.location.search);
@@ -35,12 +32,18 @@ export default function CallbackPage() {
             login(tokens);
             console.log('=== Callback: login called');
 
-            navigate('/');
+            navigate('/analyze');
         } catch (err) {
             console.log('=== Callback error:', err.message);
             setError("Login failed. Please try again.");
         }
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            handleCallback();
+        }, 0);
+    }, []);
 
     if (error) {
         return (
