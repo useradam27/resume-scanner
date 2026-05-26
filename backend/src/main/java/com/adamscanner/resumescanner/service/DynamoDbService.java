@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.adamscanner.resumescanner.model.AnalysisDetailResponse;
 import com.adamscanner.resumescanner.model.AnalysisResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,7 +82,7 @@ public class DynamoDbService {
     }
 
     // retireve single analysis by ID
-    public AnalysisResult getAnalysis(String userId, String analysisId) {
+    public AnalysisDetailResponse getAnalysis(String userId, String analysisId) {
         Map<String, AttributeValue> key = Map.of(
                 "userId", AttributeValue.builder().s(userId).build(),
                 "analysisId", AttributeValue.builder().s(analysisId).build()
@@ -100,7 +101,15 @@ public class DynamoDbService {
 
         try {
             String resultJson = response.item().get("resultJson").s();
-            return objectMapper.readValue(resultJson, AnalysisResult.class);
+            AnalysisResult result = objectMapper.readValue(resultJson, AnalysisResult.class);
+            String resumeS3Key = response.item().containsKey("resumeS3Key") ? response.item().get("resumeS3Key").s() : null;
+            String resumeFileName = response.item().containsKey("resumeFileName") ? response.item().get("resumeFileName").s() : "resume.pdf";
+            return AnalysisDetailResponse.builder()
+                    .result(result)
+                    .resumeS3Key(resumeS3Key)
+                    .resumeFileName(resumeFileName)
+                    .build();
+                    
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to parse stored analysis result", e);
         }

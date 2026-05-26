@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adamscanner.resumescanner.model.AnalysisResult;
+import com.adamscanner.resumescanner.model.AnalysisDetailResponse;
 import com.adamscanner.resumescanner.service.DynamoDbService;
 
 @RestController
@@ -35,9 +35,9 @@ public class HistoryController {
     }
 
     @GetMapping("/analysis/{analysisId}")
-    public ResponseEntity<AnalysisResult> getAnalysis(@PathVariable String analysisId) {
+    public ResponseEntity<AnalysisDetailResponse> getAnalysis(@PathVariable String analysisId) {
         String userId = getUserId();
-        AnalysisResult result = dynamoDbService.getAnalysis(userId, analysisId);
-        return ResponseEntity.ok(result);
+        AnalysisDetailResponse detail = dynamoDbService.getAnalysis(userId, analysisId);
+        return ResponseEntity.ok(detail);
     }
 }

@@ -2,6 +2,7 @@ import ScoreGauge from "./ScoreGauge";
 import StrengthsTab from "./StrengthsTag";
 import MissingKeywords from "./MissingKeywords";
 import SuggestionsList from "./SuggestionsList";
+import { downloadResume } from "../services/resumeService";
 
 function MatchBadge({label, value }) {
     const colors = {
@@ -20,9 +21,18 @@ function MatchBadge({label, value }) {
     );
 }
 
-export default function ResultsDisplay({result}) {
+export default function ResultsDisplay({result, resumeS3Key, resumeFileName}) {
+    async function handleDownload() {
+        try {
+            await downloadResume(resumeS3Key, resumeFileName);
+        } catch (err) {
+            alert("Failed to download resume. Please try again.");
+        }
+    }
     return (
         <div className="space-y-6">
+
+            {/* Score and summary */}
             <div className="bg-white rounded-xl shadow-sm border p-6 text-center">
                 <ScoreGauge score={result.overallScore} />
                 <p className="text-gray-600 mt-4">{result.summary}</p>
@@ -31,6 +41,28 @@ export default function ResultsDisplay({result}) {
                     <MatchBadge label="Skills" value={result.skillsMatch} />
                 </div>
             </div>
+
+            {resumeS3Key && (
+                <div className="bg-white rounded-xl shadow-sm border
+                                p-4 flex items-center justify-between">
+                <div>
+                    <p className="font-medium text-gray-800">
+                    {resumeFileName || 'Resume'}
+                    </p>
+                    <p className="text-sm text-gray-400">
+                    Download the resume used for this analysis
+                    </p>
+                </div>
+                <button
+                    onClick={handleDownload}
+                    className="bg-blue-600 text-white px-4 py-2
+                            rounded-lg text-sm font-medium
+                            hover:bg-blue-700 transition-colors"
+                >
+                    Download
+                </button>
+                </div>
+            )}
 
             <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white rounded-xl shadow-sm border p-5">

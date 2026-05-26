@@ -5,8 +5,13 @@ import java.io.InputStream;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +24,7 @@ import com.adamscanner.resumescanner.model.ResumeUploadResponse;
 import com.adamscanner.resumescanner.service.AnalysisService;
 import com.adamscanner.resumescanner.service.S3Service;
 import com.adamscanner.resumescanner.service.TextExtractionService;
+
 
 
 @RestController
@@ -83,6 +89,40 @@ public class ResumeController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/download")
+    public ResponseEntity<InputStreamResource> downloadResume(@RequestParam("key") String s3Key) {
+
+
+        String userId = getUserId();
+
+        //make sure the requested file belongs to the user
+        if(!s3Key.startsWith("resumes/" + userId + "/")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); 
+        }
+
+        InputStream fileStream = s3Service.downloadFile(s3Key);
+
+
+        //get the file name
+        String fileName = s3Key.substring(s3Key.lastIndexOf("/") + 1);
+        if(fileName.length() > 37) {
+            fileName = fileName.substring(37); // remove the UUID prefix
+        }
+
+
+        String contentType = fileName.endsWith(".pdf")
+            ? "application/pdf"
+            : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+            .contentType(MediaType.parseMediaType(contentType))
+            .body(new InputStreamResource(fileStream));
+
+
+    }
+    
 
     @PostMapping("/analyze")
     public ResponseEntity<AnalysisResult> analyzeResume(@RequestParam("file") MultipartFile file, @RequestParam("jobPosting") String jobPostingText) throws IOException {

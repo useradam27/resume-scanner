@@ -1,4 +1,4 @@
-import {useState, useEffect, use} from 'react';
+import {useState, useEffect} from 'react';
 import AnalysisCard from '../components/AnalysisCard';
 import ResultsDisplay from '../components/ResultsDisplay';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -62,7 +62,7 @@ export default function HistoryPage() {
                         &larr; Back to History
                     </button>
 
-                    <ResultsDisplay result={selectedResult} />
+                    <ResultsDisplay result={selectedResult.result} resumeS3Key={selectedResult.resumeS3Key} resumeFileName={selectedResult.resumeFileName} />
                 </div>
             ) : detailLoading ? (
                 <LoadingSpinner message="Loading analysis..." />
