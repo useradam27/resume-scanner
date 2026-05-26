@@ -1,0 +1,23 @@
+aws:
+  region: ${AWS_REGION}
+  s3:
+    bucket-name: ${S3_BUCKET_NAME}
+  bedrock:
+    model-id: ${BEDROCK_MODEL_ID}
+  dynamodb:
+    table-name: ${DYNAMODB_TABLE_NAME}
+  cognito:
+    user-pool-id: ${COGNITO_USER_POOL_ID}
+    client-id: ${COGNITO_CLIENT_ID}
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.${AWS_REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}
