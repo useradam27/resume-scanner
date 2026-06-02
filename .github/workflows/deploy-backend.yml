@@ -1,6 +1,7 @@
 name: Deploy Backend
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -20,7 +21,7 @@ jobs:
 
       - name: Build JAR
         working-directory: ./backend
-        run: ./mvnw clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       - name: Verify JAR exists
         run: ls -la backend/target/*.jar
