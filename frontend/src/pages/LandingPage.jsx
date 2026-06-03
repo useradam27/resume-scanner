@@ -19,7 +19,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold text-gray-900 mb-4">
-          AI Resume Scanner
+          Resume Match Scanner
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
           Upload your resume, paste a job posting, and get an
