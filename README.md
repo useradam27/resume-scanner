@@ -92,7 +92,7 @@ Both apps deploy through GitHub Actions on push to `main`:
 
 Both also support `workflow_dispatch` for manual runs from the Actions tab.
 
-AWS credentials live in GitHub Repository Secrets (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`). The full deployment story — including the problems I hit and how I fixed them — is in [`claude/aws-deployment-guide.md`](claude/aws-deployment-guide.md).
+AWS credentials live in GitHub Repository Secrets (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`). 
 
 ## API
 
