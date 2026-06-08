@@ -7,7 +7,15 @@ Live at [resume-match.dev](https://resume-match.dev).
 ## Screenshots
 
 <!-- Drop a screenshot or GIF of the upload, results, and history pages here -->
-*Coming soon*
+*Main Login Page*
+<img width="1588" height="918" alt="Screenshot 2026-06-08 at 7 02 50 PM" src="https://github.com/user-attachments/assets/561edaab-5d10-4a51-9dfd-f5cb425f1431" />
+
+*Analysis Upload Page*
+<img width="2032" height="1162" alt="Screenshot 2026-06-08 at 7 02 58 PM" src="https://github.com/user-attachments/assets/42347f56-9be0-4f99-9114-dd28cfa03117" />
+
+*History and Results*
+<img width="2032" height="1162" alt="Screenshot 2026-06-08 at 7 03 20 PM" src="https://github.com/user-attachments/assets/22282afd-03c3-42b7-90c4-230728992437" />
+
 
 ## Features
 
