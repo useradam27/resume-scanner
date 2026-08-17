@@ -20,7 +20,7 @@ Live at [resume-match.dev](https://resume-match.dev).
 ## Features
 
 - Upload a resume (PDF or DOCX, 10MB max)
-- AI analysis against a pasted job posting — match score, missing keywords, suggestions, strengths
+- AI analysis against a pasted job posting - match score, missing keywords, suggestions, strengths
 - History page with every past analysis, scoped to the logged-in user
 - Re-open any past analysis without re-running it
 - Caching by resume + job-posting hash so identical runs don't re-hit Bedrock
@@ -117,4 +117,4 @@ All endpoints live under `/api` and require a Cognito JWT in the `Authorization:
 
 ## Author
 
-Built by Adam Gerena as a portfolio project — [github.com/useradam27](https://github.com/useradam27).
+Built by Adam Gerena as a portfolio project - [github.com/useradam27](https://github.com/useradam27).
